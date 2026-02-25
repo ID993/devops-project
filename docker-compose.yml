@@ -1,0 +1,23 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://devops:devops123@db:5432/devopsdb
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=devops
+      - POSTGRES_PASSWORD=devops123
+      - POSTGRES_DB=devopsdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
